@@ -12,7 +12,7 @@ describe('Shape::Text', () => {
     mock.expects('background').never();
     mock.expects('foreground').never();
     mock.expects('setPosition').once(10, 10);
-    mock.expects('write').never();
+    mock.expects('write').once().withArgs('');
 
     text.render(cursor);
 
@@ -27,7 +27,7 @@ describe('Shape::Text', () => {
     mock.expects('background').once().withArgs('yellow');
     mock.expects('foreground').once().withArgs('black');
     mock.expects('setPosition').once().withArgs(20, 20);
-    mock.expects('write').exactly(4);
+    mock.expects('write').once().withArgs('test');
 
     text.render(cursor);
 
@@ -47,7 +47,8 @@ describe('Shape::Text', () => {
         x: 10,
         y: 10,
         background: undefined,
-        foreground: undefined
+        foreground: undefined,
+        animation: undefined
       }
     });
   });
@@ -62,7 +63,11 @@ describe('Shape::Text', () => {
         x: 0,
         y: 0,
         background: undefined,
-        foreground: undefined
+        foreground: undefined,
+        animation: {
+          name: 'print',
+          interval: 100
+        }
       }
     };
 
@@ -74,5 +79,7 @@ describe('Shape::Text', () => {
     assert.deepEqual(text.getPosition(), {x: 0, y: 0});
     assert.isUndefined(text.getBackground());
     assert.isUndefined(text.getForeground());
+    assert.deepEqual(text.getAnimation(), {name: 'print', interval: 100});
+    assert.ok(text.isAnimated());
   });
 });

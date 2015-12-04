@@ -34,7 +34,7 @@ export default class Text extends Shape {
     if (foreground) cursor.foreground(foreground);
 
     cursor.setPosition(x, y);
-    text.split('').forEach(cursor.write.bind(cursor));
+    cursor.write(text);
 
     return this;
   }
