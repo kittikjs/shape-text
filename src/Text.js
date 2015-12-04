@@ -33,8 +33,7 @@ export default class Text extends Shape {
     if (background) cursor.background(background);
     if (foreground) cursor.foreground(foreground);
 
-    cursor.setPosition(x, y);
-    cursor.write(text);
+    cursor.setPosition(x, y).write(text);
 
     return this;
   }

@@ -11,7 +11,7 @@ describe('Shape::Text', () => {
 
     mock.expects('background').never();
     mock.expects('foreground').never();
-    mock.expects('setPosition').once(10, 10);
+    mock.expects('setPosition').once(10, 10).returns(cursor);
     mock.expects('write').once().withArgs('');
 
     text.render(cursor);
@@ -26,7 +26,7 @@ describe('Shape::Text', () => {
 
     mock.expects('background').once().withArgs('yellow');
     mock.expects('foreground').once().withArgs('black');
-    mock.expects('setPosition').once().withArgs(20, 20);
+    mock.expects('setPosition').once().withArgs(20, 20).returns(cursor);
     mock.expects('write').once().withArgs('test');
 
     text.render(cursor);
