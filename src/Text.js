@@ -7,23 +7,6 @@ import Shape from 'kittik-shape-basic';
  * @version 1.0.0
  */
 export default class Text extends Shape {
-  /**
-   * Creates new Text instance.
-   *
-   * @constructor
-   * @param {Object} [options] Options go into {@link Shape} class and they are the same.
-   */
-  constructor(options) {
-    super(options);
-  }
-
-  /**
-   * Renders a shape.
-   *
-   * @override
-   * @param {Cursor} cursor
-   * @returns {Text}
-   */
   render(cursor) {
     let text = this.getText();
     let {x, y} = this.getPosition();

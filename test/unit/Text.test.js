@@ -80,6 +80,8 @@ describe('Shape::Text', () => {
     assert.isUndefined(text.getBackground());
     assert.isUndefined(text.getForeground());
     assert.deepEqual(text.getAnimation(), {name: 'print', interval: 100});
+    assert.equal(text.get('animation.name'), 'print');
+    assert.equal(text.get('animation.interval'), 100);
     assert.ok(text.isAnimated());
   });
 });
