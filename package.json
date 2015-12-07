@@ -21,7 +21,7 @@
     "test": "babel-node ./node_modules/.bin/isparta cover _mocha"
   },
   "dependencies": {
-    "kittik-shape-basic": "1.1.0"
+    "kittik-shape-basic": "1.2.0"
   },
   "devDependencies": {
     "babel-cli": "6.3.15",
