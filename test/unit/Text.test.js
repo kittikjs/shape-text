@@ -11,7 +11,7 @@ describe('Shape::Text', () => {
 
     mock.expects('background').never();
     mock.expects('foreground').never();
-    mock.expects('setPosition').once(10, 10).returns(cursor);
+    mock.expects('moveTo').once(10, 10).returns(cursor);
     mock.expects('write').once().withArgs('');
 
     text.render(cursor);
@@ -21,12 +21,12 @@ describe('Shape::Text', () => {
 
   it('Should properly render with custom options', () => {
     let cursor = Cursor.create();
-    let text = Text.create({background: COLORS.YELLOW, foreground: COLORS.BLACK}).setPosition(20, 20).setText('test');
+    let text = Text.create({background: COLORS.YELLOW, foreground: COLORS.BLACK}).setX(20).setY(20).setText('test');
     let mock = sinon.mock(cursor);
 
-    mock.expects('background').once().withArgs('yellow');
-    mock.expects('foreground').once().withArgs('black');
-    mock.expects('setPosition').once().withArgs(20, 20).returns(cursor);
+    mock.expects('background').once().withArgs(11);
+    mock.expects('foreground').once().withArgs(0);
+    mock.expects('moveTo').once().withArgs(20, 20).returns(cursor);
     mock.expects('write').once().withArgs('test');
 
     text.render(cursor);
@@ -46,6 +46,8 @@ describe('Shape::Text', () => {
         height: 5,
         x: 10,
         y: 10,
+        alignX: 'none',
+        alignY: 'none',
         background: undefined,
         foreground: undefined,
         animation: undefined
@@ -76,7 +78,8 @@ describe('Shape::Text', () => {
     assert.equal(text.getText(), 'test');
     assert.equal(text.getWidth(), 30);
     assert.equal(text.getHeight(), 50);
-    assert.deepEqual(text.getPosition(), {x: 0, y: 0});
+    assert.equal(text.getX(), 0);
+    assert.equal(text.getY(), 0);
     assert.isUndefined(text.getBackground());
     assert.isUndefined(text.getForeground());
     assert.deepEqual(text.getAnimation(), {name: 'print', interval: 100});
