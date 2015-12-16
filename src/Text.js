@@ -177,15 +177,13 @@ export default class Text extends Shape {
   toObject() {
     let obj = super.toObject();
 
-    Object.assign(obj, {
-      options: {
-        bold: this.isBold(),
-        dim: this.isDim(),
-        underlined: this.isUnderlined(),
-        blink: this.isBlink(),
-        reverse: this.isReverse(),
-        hidden: this.isHidden()
-      }
+    Object.assign(obj.options, {
+      bold: this.isBold(),
+      dim: this.isDim(),
+      underlined: this.isUnderlined(),
+      blink: this.isBlink(),
+      reverse: this.isReverse(),
+      hidden: this.isHidden()
     });
 
     return obj;
