@@ -7,7 +7,7 @@ import Shape from 'kittik-shape-basic';
  * @since 1.0.0
  */
 export default class Text extends Shape {
-  constructor(options) {
+  constructor(options = {}) {
     super(options);
 
     this.setBold(options.bold);
