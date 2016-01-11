@@ -19,6 +19,25 @@ export default class Text extends Shape {
   }
 
   /**
+   * Returns actual width of the shape.
+   *
+   * @returns {Number}
+   */
+  getWidth() {
+    const text = this.getText().split('\n').map(item => item.length);
+    return Math.max(...text);
+  }
+
+  /**
+   * Returns actual height of the shape.
+   *
+   * @returns {Number}
+   */
+  getHeight() {
+    return this.getText().split('\n').length;
+  }
+
+  /**
    * Check if text should be rendered as bold.
    *
    * @returns {Boolean}
