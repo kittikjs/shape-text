@@ -1,12 +1,22 @@
 import { assert } from 'chai';
 import sinon from 'sinon';
 import Text from '../../src/Text';
-import { Cursor, COLORS } from 'kittik-cursor';
+import { Cursor } from 'kittik-cursor';
 
 describe('Shape::Text', () => {
   it('Should properly create Text instance', () => {
     let text = new Text();
     assert.instanceOf(text, Text);
+  });
+
+  it('Should properly get actual width of the shape', () => {
+    let text = new Text({text: 'test'});
+    assert.equal(text.getWidth(), 4);
+  });
+
+  it('Should properly get actual height of the shape', () => {
+    let text = new Text({text: 'test'});
+    assert.equal(text.getHeight(), 1);
   });
 
   it('Should properly get/set bold mode', () => {
@@ -77,23 +87,23 @@ describe('Shape::Text', () => {
     let mock = sinon.mock(cursor);
     let text = Text.create({
       text: 'test',
-      x: 20,
+      x: 'left',
       y: 1,
-      background: COLORS.YELLOW,
-      foreground: COLORS.BLACK,
+      background: 'yellow',
+      foreground: 'black',
       bold: true,
       underlined: true
     });
 
-    mock.expects('foreground').once().withArgs(0).returns(cursor);
-    mock.expects('background').once().withArgs(11).returns(cursor);
+    mock.expects('foreground').once().withArgs('black').returns(cursor);
+    mock.expects('background').once().withArgs('yellow').returns(cursor);
     mock.expects('bold').once().withArgs(true).returns(cursor);
     mock.expects('dim').once().withArgs(false).returns(cursor);
     mock.expects('underlined').once().withArgs(true).returns(cursor);
     mock.expects('blink').once().withArgs(false).returns(cursor);
     mock.expects('reverse').once().withArgs(false).returns(cursor);
     mock.expects('hidden').once().withArgs(false).returns(cursor);
-    mock.expects('moveTo').once(20, 1).returns(cursor);
+    mock.expects('moveTo').once(1, 1).returns(cursor);
     mock.expects('write').once().withArgs('test');
 
     text.render(cursor);
@@ -113,14 +123,14 @@ describe('Shape::Text', () => {
         height: 5,
         x: 10,
         y: 10,
+        background: undefined,
+        foreground: undefined,
         bold: true,
         dim: false,
         underlined: false,
         blink: false,
         reverse: false,
-        hidden: false,
-        background: undefined,
-        foreground: undefined
+        hidden: false
       }
     });
   });
@@ -130,12 +140,12 @@ describe('Shape::Text', () => {
       type: 'Text',
       options: {
         text: 'test',
-        x: 1,
-        y: 1,
-        bold: true,
-        underlined: true,
+        x: 'left',
+        y: 'top',
         background: undefined,
-        foreground: undefined
+        foreground: undefined,
+        bold: true,
+        underlined: true
       }
     };
 
@@ -146,10 +156,13 @@ describe('Shape::Text', () => {
     assert.equal(text.getHeight(), 1);
     assert.equal(text.getX(), 1);
     assert.equal(text.getY(), 1);
-    assert.ok(text.isBold());
-    assert.ok(text.isUnderlined());
-    assert.notOk(text.isDim());
     assert.isUndefined(text.getBackground());
     assert.isUndefined(text.getForeground());
+    assert.ok(text.isBold());
+    assert.notOk(text.isDim());
+    assert.ok(text.isUnderlined());
+    assert.notOk(text.isBlink());
+    assert.notOk(text.isReverse());
+    assert.notOk(text.isHidden());
   });
 });
