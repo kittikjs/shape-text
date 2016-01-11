@@ -102,19 +102,17 @@ describe('Shape::Text', () => {
   });
 
   it('Should properly serialize shape to Object representation', () => {
-    let text = Text.create({text: 'test', bold: true, alignX: 'center'});
+    let text = Text.create({text: 'test', bold: true});
     let obj = text.toObject();
 
     assert.deepEqual(obj, {
-      name: 'Text',
+      type: 'Text',
       options: {
         text: 'test',
         width: 15,
         height: 5,
         x: 10,
         y: 10,
-        alignX: 'center',
-        alignY: 'none',
         bold: true,
         dim: false,
         underlined: false,
@@ -122,39 +120,30 @@ describe('Shape::Text', () => {
         reverse: false,
         hidden: false,
         background: undefined,
-        foreground: undefined,
-        animation: undefined
+        foreground: undefined
       }
     });
   });
 
   it('Should properly create text from Object representation', () => {
     let obj = {
-      name: 'Text',
+      type: 'Text',
       options: {
         text: 'test',
-        width: 30,
-        height: 50,
         x: 1,
         y: 1,
         bold: true,
         underlined: true,
         background: undefined,
-        foreground: undefined,
-        animation: {
-          name: 'print',
-          options: {
-            interval: 100
-          }
-        }
+        foreground: undefined
       }
     };
 
     let text = Text.fromObject(obj);
     assert.instanceOf(text, Text);
     assert.equal(text.getText(), 'test');
-    assert.equal(text.getWidth(), 30);
-    assert.equal(text.getHeight(), 50);
+    assert.equal(text.getWidth(), 4);
+    assert.equal(text.getHeight(), 1);
     assert.equal(text.getX(), 1);
     assert.equal(text.getY(), 1);
     assert.ok(text.isBold());
@@ -162,8 +151,5 @@ describe('Shape::Text', () => {
     assert.notOk(text.isDim());
     assert.isUndefined(text.getBackground());
     assert.isUndefined(text.getForeground());
-    assert.equal(text.getAnimationName(), 'print');
-    assert.deepEqual(text.getAnimationOptions(), {interval: 100});
-    assert.ok(text.isAnimated());
   });
 });
