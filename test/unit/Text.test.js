@@ -111,6 +111,35 @@ describe('Shape::Text', () => {
     mock.verify();
   });
 
+  it('Should properly render multi-lined text', () => {
+    let cursor = Cursor.create();
+    let mock = sinon.mock(cursor);
+    let text = Text.create({
+      text: 'test\nanother',
+      x: 'left',
+      y: 1,
+      background: 'yellow',
+      foreground: 'black',
+      bold: true,
+      underlined: true
+    });
+
+    mock.expects('foreground').once().withArgs('black').returns(cursor);
+    mock.expects('background').once().withArgs('yellow').returns(cursor);
+    mock.expects('bold').once().withArgs(true).returns(cursor);
+    mock.expects('dim').once().withArgs(false).returns(cursor);
+    mock.expects('underlined').once().withArgs(true).returns(cursor);
+    mock.expects('blink').once().withArgs(false).returns(cursor);
+    mock.expects('reverse').once().withArgs(false).returns(cursor);
+    mock.expects('hidden').once().withArgs(false).returns(cursor);
+    mock.expects('moveTo').twice().returns(cursor);
+    mock.expects('write').twice().returns(cursor);
+
+    text.render(cursor);
+
+    mock.verify();
+  });
+
   it('Should properly serialize shape to Object representation', () => {
     let text = Text.create({text: 'test', bold: true});
     let obj = text.toObject();
