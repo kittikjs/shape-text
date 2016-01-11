@@ -159,7 +159,7 @@ export default class Text extends Shape {
    * @returns {Text}
    */
   render(cursor) {
-    let text = this.getText();
+    let text = this.getText().split('\n');
     let x = this.getX();
     let y = this.getY();
     let foreground = this.getForeground();
@@ -174,15 +174,8 @@ export default class Text extends Shape {
     if (foreground !== undefined) cursor.foreground(foreground);
     if (background !== undefined) cursor.background(background);
 
-    cursor
-      .bold(isBold)
-      .dim(isDim)
-      .underlined(isUnderlined)
-      .blink(isBlink)
-      .reverse(isReverse)
-      .hidden(isHidden)
-      .moveTo(x, y)
-      .write(text);
+    cursor.bold(isBold).dim(isDim).underlined(isUnderlined).blink(isBlink).reverse(isReverse).hidden(isHidden);
+    text.forEach((item, index) => cursor.moveTo(x, y + index).write(item));
 
     return this;
   }
