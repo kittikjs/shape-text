@@ -16,6 +16,7 @@ export default class Text extends Shape {
     this.setBlink(options.blink);
     this.setReverse(options.reverse);
     this.setHidden(options.hidden);
+    this.setAlign(options.align);
   }
 
   /**
@@ -152,6 +153,26 @@ export default class Text extends Shape {
   }
 
   /**
+   * Get text align.
+   *
+   * @returns {String}
+   */
+  getAlign() {
+    return this.get('align');
+  }
+
+  /**
+   * Set text align.
+   *
+   * @param {String} align
+   * @returns {Shape}
+   */
+  setAlign(align = 'center') {
+    if (['left', 'center', 'right'].indexOf(align) === -1) throw new Error(`Unknown align option: ${align}`);
+    return this.set('align', align);
+  }
+
+  /**
    * Render the shape based on options.
    *
    * @override
@@ -159,23 +180,40 @@ export default class Text extends Shape {
    * @returns {Text}
    */
   render(cursor) {
-    let text = this.getText().split('\n');
-    let x = this.getX();
-    let y = this.getY();
-    let foreground = this.getForeground();
-    let background = this.getBackground();
-    let isBold = this.isBold();
-    let isDim = this.isDim();
-    let isUnderlined = this.isUnderlined();
-    let isBlink = this.isBlink();
-    let isReverse = this.isReverse();
-    let isHidden = this.isHidden();
+    const text = this.getText().split('\n');
+    const x = this.getX();
+    const y = this.getY();
+    const foreground = this.getForeground();
+    const background = this.getBackground();
+    const isBold = this.isBold();
+    const isDim = this.isDim();
+    const isUnderlined = this.isUnderlined();
+    const isBlink = this.isBlink();
+    const isReverse = this.isReverse();
+    const isHidden = this.isHidden();
+    const align = this.getAlign();
 
     if (foreground !== undefined) cursor.foreground(foreground);
     if (background !== undefined) cursor.background(background);
 
     cursor.bold(isBold).dim(isDim).underlined(isUnderlined).blink(isBlink).reverse(isReverse).hidden(isHidden);
-    text.forEach((item, index) => cursor.moveTo(x, y + index).write(item));
+
+    text.forEach((item, index) => {
+      switch (align) {
+        case 'left':
+          cursor.moveTo(x, y + index).write(item);
+          break;
+        case 'center':
+          cursor.moveTo(x + (this.getWidth() / 2 - item.length / 2), y + index).write(item);
+          break;
+        case 'right':
+          cursor.moveTo(x + (this.getWidth() - item.length), y + index).write(item);
+          break;
+        default:
+          cursor.moveTo(x, y + index).write(item);
+          break;
+      }
+    });
 
     return this;
   }
@@ -195,7 +233,8 @@ export default class Text extends Shape {
       underlined: this.isUnderlined(),
       blink: this.isBlink(),
       reverse: this.isReverse(),
-      hidden: this.isHidden()
+      hidden: this.isHidden(),
+      align: this.getAlign()
     });
 
     return obj;
