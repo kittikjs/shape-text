@@ -1,7 +1,7 @@
 import { assert } from 'chai';
 import sinon from 'sinon';
 import Text from '../../src/Text';
-import { Cursor } from 'kittik-cursor';
+import Cursor from 'kittik-cursor';
 
 describe('Shape::Text', () => {
   it('Should properly create Text instance', () => {
@@ -61,9 +61,84 @@ describe('Shape::Text', () => {
     assert.ok(text.isHidden());
   });
 
+  it('Should properly throw exception if align is not supported', () => {
+    let text = new Text();
+    assert.throws(() => text.setAlign('wrong'), Error, 'Unknown align option: wrong');
+  });
+
+  it('Should properly get/set align', () => {
+    let text = new Text();
+    assert.equal(text.getAlign(), 'center');
+    assert.instanceOf(text.setAlign('right'), Text);
+    assert.equal(text.getAlign(), 'right');
+  });
+
   it('Should properly render with default options', () => {
     let cursor = Cursor.create();
     let text = new Text();
+    let mock = sinon.mock(cursor);
+
+    mock.expects('foreground').never();
+    mock.expects('background').never();
+    mock.expects('bold').once().withArgs(false).returns(cursor);
+    mock.expects('dim').once().withArgs(false).returns(cursor);
+    mock.expects('underlined').once().withArgs(false).returns(cursor);
+    mock.expects('blink').once().withArgs(false).returns(cursor);
+    mock.expects('reverse').once().withArgs(false).returns(cursor);
+    mock.expects('hidden').once().withArgs(false).returns(cursor);
+    mock.expects('moveTo').once(10, 10).returns(cursor);
+    mock.expects('write').once().withArgs('');
+
+    text.render(cursor);
+
+    mock.verify();
+  });
+
+  it('Should properly render with text align to left', () => {
+    let cursor = Cursor.create();
+    let text = new Text({align: 'left'});
+    let mock = sinon.mock(cursor);
+
+    mock.expects('foreground').never();
+    mock.expects('background').never();
+    mock.expects('bold').once().withArgs(false).returns(cursor);
+    mock.expects('dim').once().withArgs(false).returns(cursor);
+    mock.expects('underlined').once().withArgs(false).returns(cursor);
+    mock.expects('blink').once().withArgs(false).returns(cursor);
+    mock.expects('reverse').once().withArgs(false).returns(cursor);
+    mock.expects('hidden').once().withArgs(false).returns(cursor);
+    mock.expects('moveTo').once(10, 10).returns(cursor);
+    mock.expects('write').once().withArgs('');
+
+    text.render(cursor);
+
+    mock.verify();
+  });
+
+  it('Should properly render with text align to center', () => {
+    let cursor = Cursor.create();
+    let text = new Text({align: 'center'});
+    let mock = sinon.mock(cursor);
+
+    mock.expects('foreground').never();
+    mock.expects('background').never();
+    mock.expects('bold').once().withArgs(false).returns(cursor);
+    mock.expects('dim').once().withArgs(false).returns(cursor);
+    mock.expects('underlined').once().withArgs(false).returns(cursor);
+    mock.expects('blink').once().withArgs(false).returns(cursor);
+    mock.expects('reverse').once().withArgs(false).returns(cursor);
+    mock.expects('hidden').once().withArgs(false).returns(cursor);
+    mock.expects('moveTo').once(10, 10).returns(cursor);
+    mock.expects('write').once().withArgs('');
+
+    text.render(cursor);
+
+    mock.verify();
+  });
+
+  it('Should properly render with text align to right', () => {
+    let cursor = Cursor.create();
+    let text = new Text({align: 'right'});
     let mock = sinon.mock(cursor);
 
     mock.expects('foreground').never();
@@ -159,7 +234,8 @@ describe('Shape::Text', () => {
         underlined: false,
         blink: false,
         reverse: false,
-        hidden: false
+        hidden: false,
+        align: 'center'
       }
     });
   });
@@ -174,7 +250,8 @@ describe('Shape::Text', () => {
         background: undefined,
         foreground: undefined,
         bold: true,
-        underlined: true
+        underlined: true,
+        align: 'right'
       }
     };
 
@@ -193,5 +270,6 @@ describe('Shape::Text', () => {
     assert.notOk(text.isBlink());
     assert.notOk(text.isReverse());
     assert.notOk(text.isHidden());
+    assert.equal(text.getAlign(), 'right');
   });
 });
