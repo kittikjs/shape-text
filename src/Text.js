@@ -209,9 +209,6 @@ export default class Text extends Shape {
         case 'right':
           cursor.moveTo(x + (this.getWidth() - item.length), y + index).write(item);
           break;
-        default:
-          cursor.moveTo(x, y + index).write(item);
-          break;
       }
     });
 
