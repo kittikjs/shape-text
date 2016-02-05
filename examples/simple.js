@@ -1,7 +1,7 @@
 "use strict";
 
-const Text = require('../lib/Text').default;
-const cursor = require('kittik-cursor').default.create().resetTTY();
+const Text = require('../lib/Text');
+const cursor = require('kittik-cursor').create().resetTTY();
 
 Text.create({text: 'Hello, there!', x: 'center', y: 5, underlined: true}).render(cursor);
 Text.create({text: 'It is a simple text shape', x: 'center', y: 7, bold: true}).render(cursor);
