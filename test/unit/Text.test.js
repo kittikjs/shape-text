@@ -5,78 +5,78 @@ import Cursor from 'kittik-cursor';
 
 describe('Shape::Text', () => {
   it('Should properly create Text instance', () => {
-    let text = new Text();
+    const text = new Text();
     assert.instanceOf(text, Text);
   });
 
   it('Should properly get actual width of the shape', () => {
-    let text = new Text({text: 'test'});
+    const text = new Text({text: 'test'});
     assert.equal(text.getWidth(), 4);
   });
 
   it('Should properly get actual height of the shape', () => {
-    let text = new Text({text: 'test'});
+    const text = new Text({text: 'test'});
     assert.equal(text.getHeight(), 1);
   });
 
   it('Should properly get/set bold mode', () => {
-    let text = new Text();
+    const text = new Text();
     assert.notOk(text.isBold());
     assert.instanceOf(text.setBold(true), Text);
     assert.ok(text.isBold());
   });
 
   it('Should properly get/set dim mode', () => {
-    let text = new Text();
+    const text = new Text();
     assert.notOk(text.isDim());
     assert.instanceOf(text.setDim(true), Text);
     assert.ok(text.isDim());
   });
 
   it('Should properly get/set underlined mode', () => {
-    let text = new Text();
+    const text = new Text();
     assert.notOk(text.isUnderlined());
     assert.instanceOf(text.setUnderlined(true), Text);
     assert.ok(text.isUnderlined());
   });
 
   it('Should properly get/set blink mode', () => {
-    let text = new Text();
+    const text = new Text();
     assert.notOk(text.isBlink());
     assert.instanceOf(text.setBlink(true), Text);
     assert.ok(text.setBlink());
   });
 
   it('Should properly get/set reverse mode', () => {
-    let text = new Text();
+    const text = new Text();
     assert.notOk(text.isReverse());
     assert.instanceOf(text.setReverse(true), Text);
     assert.ok(text.isReverse());
   });
 
   it('Should properly get/set hidden mode', () => {
-    let text = new Text();
+    const text = new Text();
     assert.notOk(text.isHidden());
     assert.instanceOf(text.setHidden(true), Text);
     assert.ok(text.isHidden());
   });
 
   it('Should properly throw exception if align is not supported', () => {
-    let text = new Text();
+    const text = new Text();
     assert.throws(() => text.setAlign('wrong'), Error, 'Unknown align option: wrong');
   });
 
   it('Should properly get/set align', () => {
-    let text = new Text();
+    const text = new Text();
     assert.equal(text.getAlign(), 'center');
     assert.instanceOf(text.setAlign('right'), Text);
     assert.equal(text.getAlign(), 'right');
   });
 
   it('Should properly render with default options', () => {
-    let cursor = Cursor.create();
-    let text = new Text();
-    let mock = sinon.mock(cursor);
+    const cursor = Cursor.create();
+    const text = new Text();
+    const mock = sinon.mock(cursor);
 
     mock.expects('foreground').never();
     mock.expects('background').never();
@@ -95,9 +95,9 @@ describe('Shape::Text', () => {
   });
 
   it('Should properly render with text align to left', () => {
-    let cursor = Cursor.create();
-    let text = new Text({align: 'left'});
-    let mock = sinon.mock(cursor);
+    const cursor = Cursor.create();
+    const text = new Text({align: 'left'});
+    const mock = sinon.mock(cursor);
 
     mock.expects('foreground').never();
     mock.expects('background').never();
@@ -116,9 +116,9 @@ describe('Shape::Text', () => {
   });
 
   it('Should properly render with text align to center', () => {
-    let cursor = Cursor.create();
-    let text = new Text({align: 'center'});
-    let mock = sinon.mock(cursor);
+    const cursor = Cursor.create();
+    const text = new Text({align: 'center'});
+    const mock = sinon.mock(cursor);
 
     mock.expects('foreground').never();
     mock.expects('background').never();
@@ -137,9 +137,9 @@ describe('Shape::Text', () => {
   });
 
   it('Should properly render with text align to right', () => {
-    let cursor = Cursor.create();
-    let text = new Text({align: 'right'});
-    let mock = sinon.mock(cursor);
+    const cursor = Cursor.create();
+    const text = new Text({align: 'right'});
+    const mock = sinon.mock(cursor);
 
     mock.expects('foreground').never();
     mock.expects('background').never();
@@ -158,9 +158,9 @@ describe('Shape::Text', () => {
   });
 
   it('Should properly render with custom options', () => {
-    let cursor = Cursor.create();
-    let mock = sinon.mock(cursor);
-    let text = Text.create({
+    const cursor = Cursor.create();
+    const mock = sinon.mock(cursor);
+    const text = Text.create({
       text: 'test',
       x: 'left',
       y: 1,
@@ -187,9 +187,9 @@ describe('Shape::Text', () => {
   });
 
   it('Should properly render multi-lined text', () => {
-    let cursor = Cursor.create();
-    let mock = sinon.mock(cursor);
-    let text = Text.create({
+    const cursor = Cursor.create();
+    const mock = sinon.mock(cursor);
+    const text = Text.create({
       text: 'test\nanother',
       x: 'left',
       y: 1,
@@ -216,8 +216,8 @@ describe('Shape::Text', () => {
   });
 
   it('Should properly serialize shape to Object representation', () => {
-    let text = Text.create({text: 'test', bold: true});
-    let obj = text.toObject();
+    const text = Text.create({text: 'test', bold: true});
+    const obj = text.toObject();
 
     assert.deepEqual(obj, {
       type: 'Text',
@@ -241,7 +241,7 @@ describe('Shape::Text', () => {
   });
 
   it('Should properly create text from Object representation', () => {
-    let obj = {
+    const obj = {
       type: 'Text',
       options: {
         text: 'test',
@@ -255,7 +255,7 @@ describe('Shape::Text', () => {
       }
     };
 
-    let text = Text.fromObject(obj);
+    const text = Text.fromObject(obj);
     assert.instanceOf(text, Text);
     assert.equal(text.getText(), 'test');
     assert.equal(text.getWidth(), 4);
