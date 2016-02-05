@@ -27,7 +27,7 @@ Include in your project:
 
 ```javascript
 import Text from 'kittik-shape-text';
-import { Cursor } from 'kittik-cursor';
+import Cursor from 'kittik-cursor';
 
 // You must pass to render method cursor that will be used for rendering the shape
 Text.create().render(Cursor.create());
@@ -37,7 +37,7 @@ Text.create().render(Cursor.create());
 
 The MIT License (MIT)
 
-Copyright (c) 2015 Eugene Obrezkov
+Copyright (c) 2015-2016 Eugene Obrezkov
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
