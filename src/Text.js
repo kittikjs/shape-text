@@ -222,16 +222,16 @@ export default class Text extends Shape {
    * @returns {{name, options}|*}
    */
   toObject() {
-    let obj = super.toObject();
+    const obj = super.toObject();
 
     Object.assign(obj.options, {
-      bold: this.isBold(),
-      dim: this.isDim(),
-      underlined: this.isUnderlined(),
-      blink: this.isBlink(),
-      reverse: this.isReverse(),
-      hidden: this.isHidden(),
-      align: this.getAlign()
+      bold: this.get('bold'),
+      dim: this.get('dim'),
+      underlined: this.get('underlined'),
+      blink: this.get('blink'),
+      reverse: this.get('reverse'),
+      hidden: this.get('hidden'),
+      align: this.get('align')
     });
 
     return obj;
