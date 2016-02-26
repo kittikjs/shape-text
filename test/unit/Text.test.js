@@ -78,8 +78,8 @@ describe('Shape::Text', () => {
     const text = new Text();
     const mock = sinon.mock(cursor);
 
-    mock.expects('foreground').never();
-    mock.expects('background').never();
+    mock.expects('foreground').once().withExactArgs(false).returns(cursor);
+    mock.expects('background').once().withExactArgs(false).returns(cursor);
     mock.expects('bold').once().withArgs(false).returns(cursor);
     mock.expects('dim').once().withArgs(false).returns(cursor);
     mock.expects('underlined').once().withArgs(false).returns(cursor);
@@ -99,8 +99,8 @@ describe('Shape::Text', () => {
     const text = new Text({align: 'left'});
     const mock = sinon.mock(cursor);
 
-    mock.expects('foreground').never();
-    mock.expects('background').never();
+    mock.expects('foreground').once().withExactArgs(false).returns(cursor);
+    mock.expects('background').once().withExactArgs(false).returns(cursor);
     mock.expects('bold').once().withArgs(false).returns(cursor);
     mock.expects('dim').once().withArgs(false).returns(cursor);
     mock.expects('underlined').once().withArgs(false).returns(cursor);
@@ -120,8 +120,8 @@ describe('Shape::Text', () => {
     const text = new Text({align: 'center'});
     const mock = sinon.mock(cursor);
 
-    mock.expects('foreground').never();
-    mock.expects('background').never();
+    mock.expects('foreground').once().withExactArgs(false).returns(cursor);
+    mock.expects('background').once().withExactArgs(false).returns(cursor);
     mock.expects('bold').once().withArgs(false).returns(cursor);
     mock.expects('dim').once().withArgs(false).returns(cursor);
     mock.expects('underlined').once().withArgs(false).returns(cursor);
@@ -141,8 +141,8 @@ describe('Shape::Text', () => {
     const text = new Text({align: 'right'});
     const mock = sinon.mock(cursor);
 
-    mock.expects('foreground').never();
-    mock.expects('background').never();
+    mock.expects('foreground').once().withExactArgs(false).returns(cursor);
+    mock.expects('background').once().withExactArgs(false).returns(cursor);
     mock.expects('bold').once().withArgs(false).returns(cursor);
     mock.expects('dim').once().withArgs(false).returns(cursor);
     mock.expects('underlined').once().withArgs(false).returns(cursor);
@@ -227,8 +227,8 @@ describe('Shape::Text', () => {
         height: 5,
         x: 10,
         y: 10,
-        background: undefined,
-        foreground: undefined,
+        background: false,
+        foreground: false,
         bold: true,
         dim: false,
         underlined: false,
@@ -260,10 +260,10 @@ describe('Shape::Text', () => {
     assert.equal(text.getText(), 'test');
     assert.equal(text.getWidth(), 4);
     assert.equal(text.getHeight(), 1);
-    assert.equal(text.getX(), 1);
-    assert.equal(text.getY(), 1);
-    assert.isUndefined(text.getBackground());
-    assert.isUndefined(text.getForeground());
+    assert.equal(text.getX(), 0);
+    assert.equal(text.getY(), 0);
+    assert.notOk(text.getBackground());
+    assert.notOk(text.getForeground());
     assert.ok(text.isBold());
     assert.notOk(text.isDim());
     assert.ok(text.isUnderlined());

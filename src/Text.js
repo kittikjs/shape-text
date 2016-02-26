@@ -193,10 +193,7 @@ export default class Text extends Shape {
     const isHidden = this.isHidden();
     const align = this.getAlign();
 
-    if (foreground !== undefined) cursor.foreground(foreground);
-    if (background !== undefined) cursor.background(background);
-
-    cursor.bold(isBold).dim(isDim).underlined(isUnderlined).blink(isBlink).reverse(isReverse).hidden(isHidden);
+    cursor.foreground(foreground).background(background).bold(isBold).dim(isDim).underlined(isUnderlined).blink(isBlink).reverse(isReverse).hidden(isHidden);
 
     text.forEach((item, index) => {
       switch (align) {
