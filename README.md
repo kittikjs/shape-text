@@ -30,7 +30,7 @@ import Text from 'kittik-shape-text';
 import Cursor from 'kittik-cursor';
 
 // You must pass to render method cursor that will be used for rendering the shape
-Text.create().render(Cursor.create());
+Text.create(Cursor.create()).render();
 ```
 
 ## License
