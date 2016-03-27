@@ -7,8 +7,22 @@ import Shape from 'kittik-shape-basic';
  * @since 1.0.0
  */
 export default class Text extends Shape {
-  constructor(options = {}) {
-    super(options);
+  /**
+   * Create Text shape.
+   *
+   * @constructor
+   * @param {Cursor} cursor Cursor instance
+   * @param {Object} [options]
+   * @param {Boolean} [options.bold]
+   * @param {Boolean} [options.dim]
+   * @param {Boolean} [options.underlined]
+   * @param {Boolean} [options.blink]
+   * @param {Boolean} [options.reverse]
+   * @param {Boolean} [options.hidden]
+   * @param {String} [options.align]
+   */
+  constructor(cursor, options = {}) {
+    super(cursor, options);
 
     this.setBold(options.bold);
     this.setDim(options.dim);
@@ -176,10 +190,10 @@ export default class Text extends Shape {
    * Render the shape based on options.
    *
    * @override
-   * @param {Cursor} cursor
    * @returns {Text}
    */
-  render(cursor) {
+  render() {
+    const cursor = this.getCursor();
     const text = this.getText().split('\n');
     const x = this.getX();
     const y = this.getY();
@@ -193,7 +207,15 @@ export default class Text extends Shape {
     const isHidden = this.isHidden();
     const align = this.getAlign();
 
-    cursor.foreground(foreground).background(background).bold(isBold).dim(isDim).underlined(isUnderlined).blink(isBlink).reverse(isReverse).hidden(isHidden);
+    cursor
+      .foreground(foreground)
+      .background(background)
+      .bold(isBold)
+      .dim(isDim)
+      .underlined(isUnderlined)
+      .blink(isBlink)
+      .reverse(isReverse)
+      .hidden(isHidden);
 
     text.forEach((item, index) => {
       switch (align) {
@@ -216,7 +238,7 @@ export default class Text extends Shape {
    * Overrides default toObject() method because we have new fields here.
    *
    * @override
-   * @returns {{name, options}|*}
+   * @returns {Object}
    */
   toObject() {
     const obj = super.toObject();
