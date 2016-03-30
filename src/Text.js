@@ -1,10 +1,10 @@
 import Shape from 'kittik-shape-basic';
 
 /**
- * Implements Text shape which is rendering the text at specified point.
- * Supports different styles kinda bold, dim, underlined, etc...
+ * Implements Text shape which renders the text at specified point.
  *
  * @since 1.0.0
+ * @extends {Shape}
  */
 export default class Text extends Shape {
   /**
@@ -12,14 +12,24 @@ export default class Text extends Shape {
    *
    * @constructor
    * @param {Cursor} cursor Cursor instance
-   * @param {Object} [options]
-   * @param {Boolean} [options.bold]
-   * @param {Boolean} [options.dim]
-   * @param {Boolean} [options.underlined]
-   * @param {Boolean} [options.blink]
-   * @param {Boolean} [options.reverse]
-   * @param {Boolean} [options.hidden]
-   * @param {String} [options.align]
+   * @param {Object} [options] Options object
+   * @param {Boolean} [options.bold] Bold styling
+   * @param {Boolean} [options.dim] Dim styling
+   * @param {Boolean} [options.underlined] Underlined styling
+   * @param {Boolean} [options.blink] Blink styling
+   * @param {Boolean} [options.reverse] Reverse styling
+   * @param {Boolean} [options.hidden] Hidden styling
+   * @param {String} [options.align] Align text in the shape (left, center, right)
+   * @example
+   * Text.create(cursor, {
+   *   bold: true,
+   *   dim: false,
+   *   underlined: true,
+   *   blink: false,
+   *   reverse: false,
+   *   hidden: false,
+   *   align: 'center'
+   * });
    */
   constructor(cursor, options = {}) {
     super(cursor, options);
@@ -35,7 +45,10 @@ export default class Text extends Shape {
 
   /**
    * Returns actual width of the shape.
+   * Since text hasn't specified width, we need to override default.
+   * It looks for the longest line in your shape and returns its length.
    *
+   * @override
    * @returns {Number}
    */
   getWidth() {
@@ -45,7 +58,10 @@ export default class Text extends Shape {
 
   /**
    * Returns actual height of the shape.
+   * Since text hasn't specified height, we need to override default.
+   * It returns count of lines in our shape.
    *
+   * @override
    * @returns {Number}
    */
   getHeight() {
@@ -65,7 +81,7 @@ export default class Text extends Shape {
    * Toggle bold mode.
    *
    * @param {Boolean} [bold=false] If true, print bold text
-   * @returns {Shape}
+   * @returns {Text}
    */
   setBold(bold = false) {
     return this.set('bold', bold);
@@ -84,7 +100,7 @@ export default class Text extends Shape {
    * Toggle dim mode.
    *
    * @param {Boolean} [dim=false] If true, print dim text
-   * @returns {Shape}
+   * @returns {Text}
    */
   setDim(dim = false) {
     return this.set('dim', dim);
@@ -103,7 +119,7 @@ export default class Text extends Shape {
    * Toggle underlined mode.
    *
    * @param {Boolean} [underlined=false] If true, print underlined text
-   * @returns {Shape}
+   * @returns {Text}
    */
   setUnderlined(underlined = false) {
     return this.set('underlined', underlined);
@@ -122,7 +138,7 @@ export default class Text extends Shape {
    * Toggle blink mode.
    *
    * @param {Boolean} [blink=false] If true, print blink text
-   * @returns {Shape}
+   * @returns {Text}
    */
   setBlink(blink = false) {
     return this.set('blink', blink);
@@ -141,7 +157,7 @@ export default class Text extends Shape {
    * Toggle reverse mode.
    *
    * @param {Boolean} [reverse=false] If true, print text with reversed colors
-   * @returns {Shape}
+   * @returns {Text}
    */
   setReverse(reverse = false) {
     return this.set('reverse', reverse);
@@ -160,7 +176,7 @@ export default class Text extends Shape {
    * Toggle hidden mode.
    *
    * @param {Boolean} [hidden=false] If true, print hidden text
-   * @returns {Shape}
+   * @returns {Text}
    */
   setHidden(hidden = false) {
     return this.set('hidden', hidden);
@@ -177,9 +193,10 @@ export default class Text extends Shape {
 
   /**
    * Set text align.
+   * Aligns text in the shape by anchors to the left, center or to the right.
    *
-   * @param {String} align
-   * @returns {Shape}
+   * @param {String} [align='center'] Align value can be left, center or right
+   * @returns {Text}
    */
   setAlign(align = 'center') {
     if (['left', 'center', 'right'].indexOf(align) === -1) throw new Error(`Unknown align option: ${align}`);
