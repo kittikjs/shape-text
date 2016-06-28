@@ -13,7 +13,11 @@
 ![dependencies](https://img.shields.io/david/kittikjs/shape-text.svg)
 ![dev dependencies](https://img.shields.io/david/dev/kittikjs/shape-text.svg)
 
-Text shape for Kittik
+Text shape for Kittik.
+
+| Examples |
+| -------- |
+| ![kittik](https://cloud.githubusercontent.com/assets/3625244/16409313/8fd78cbc-3d25-11e6-8191-a73f62705674.gif) |
 
 ## Getting Started
 
@@ -29,9 +33,15 @@ Include in your project:
 import Text from 'kittik-shape-text';
 import Cursor from 'kittik-cursor';
 
-// You must pass to render method cursor that will be used for rendering the shape
-Text.create(Cursor.create()).render();
+Text.create(Cursor.create(), {text: 'Hello, World'}).render();
 ```
+
+You can pass all the options defined in `kittik-shape-basic` and all options implemented in this shape.
+All options you can find in API documentation.
+
+## API
+
+API declaration [here](./API.md).
 
 ## License
 
